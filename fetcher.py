@@ -4,6 +4,7 @@ import string
 import os
 
 try:
+    # If you get a file not found error, try changing your yaml file name to cinventory.yaml (I don't know why it just works)
     inventory_file: str = f"{os.path.abspath(__file__).replace('fetcher.py','')}inventory.yaml"
     print(inventory_file)
     dict_formatting = True
