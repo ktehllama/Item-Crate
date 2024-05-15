@@ -1,10 +1,14 @@
 from tkinter import *
 import customtkinter as ctk
 from fetcher import Fetch
+from ic_pdfmaker import IcPdfMaker
 import string
+import os
+from datetime import datetime
 
 try:
     fetch = Fetch()
+    icpdf = IcPdfMaker()
     spacesAmount = ' '*2
     startup_inv: dict = fetch.get_allContent()
 
@@ -15,9 +19,6 @@ try:
     root.wm_iconbitmap('crateicon.ico')
     root.title('Item Crate - Inventory Manager')
     root.geometry('700x850')
-
-    # MAX CHARS (69)
-    # root.title('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABccccccccccddddddE')
 
     # AUTO REFRESH WHEN SWITCHING TO Overview TAB
     def refreshView():
@@ -100,10 +101,16 @@ try:
     # SORT MODE 1: Start on Alphabetic | SORT MODE 0: Start on Normal
     sort_mode = 1
 
+    def createPdf():
+        icpdf.makePdf()
+        root.title(f'Created Factura (Folder: Log Facturas)')
+
     sortbyButton = ctk.CTkButton(headlineFrame, text='Toggle Sorting', corner_radius=0, command=sortBy)
     sortbyButton.pack(anchor=SE, padx=15, ipadx=10, side=RIGHT)
     refreshviewButton = ctk.CTkButton(headlineFrame, text='Refresh View', corner_radius=0, command=refreshView)
     refreshviewButton.pack(anchor=SE, padx=0, ipadx=10, side=RIGHT)
+    printInvButton = ctk.CTkButton(headlineFrame, text='Imprimir Factura', corner_radius=0, command=createPdf)
+    printInvButton.pack(anchor=SE, padx=15, ipadx=15, side=RIGHT)
 
     topLabel = ctk.CTkLabel(itemsOverview_Main, text=f'Total Items: {fetch.get_keysAmount()}', font=custom_font)
     topLabel.pack(pady=5, padx=15, anchor=NW)
