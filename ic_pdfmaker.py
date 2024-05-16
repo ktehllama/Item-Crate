@@ -67,14 +67,16 @@ try:
                     text.setFont("Helvetica", 15)
                     text.textLine(f"'{item_details['description']}'")
 
-                    for wildcard in ['sizes', 'colors', 'quantity']:
+                    for unknown_state in ['sizes', 'colors', 'quantity']:
                         try:
-                            if item_details[wildcard] is not None:
-                                if wildcard != 'sizes':
-                                    text.setFont("Helvetica-Oblique", 15)
-                                    text.textLine(f">{self.lspacer(2)}{string.capwords(wildcard)}:")
-                                    text.setFont("Helvetica", 15)
-                                    text.textLine(f'''{self.lspacer(8)}{str(item_details[wildcard]).replace("'", '').replace('[', '').replace(']', '')}''')
+                            if item_details[unknown_state] is not None:
+                                text.setFont("Helvetica-Oblique", 15)
+                                text.textLine(f">{self.lspacer(2)}{string.capwords(unknown_state)}:")
+                                text.setFont("Helvetica", 15)
+                                if unknown_state != 'sizes':
+                                    text.textLine(f'''{self.lspacer(8)}{str(item_details[unknown_state]).replace("'", '').replace('[', '').replace(']', '')}''')
+                                elif unknown_state == 'sizes':
+                                    text.textLine(f'''{self.lspacer(8)}{str(item_details[unknown_state]).replace("'",'')}''')
                         except:
                             pass
                     text.textLine()
